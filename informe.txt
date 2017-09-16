@@ -1,0 +1,34 @@
+Informe. Tarea 1 Juan Esteban Rodriguez.
+
+La tarea consiste en las funciones basicas, donde los pipes son fundamentales, ya que estos indican a los procesos que realizar.
+aca se muestra la lista de codigos a implementar. 
+
+codigo:
+-k kill
+-d dump
+-e dump errors
+-a dump accs
+-l list
+-q quit
+-n numero de cuentas a crear
+-r request
+-c confirmed request
+-d request denied
+-m numero total de cuentas en el banco
+-o reanudar trabajo
+-p pausar trabajo
+
+Para sincronizar los procesos
+
+Existe una variable con valor 1 da permiso para realizar transacciones, al llamar a una funcion dump etc... el valor cambia a cero 
+y la funcion antes de hacer el write espera a que cada una de las sucursales, (que tienen una variable, que inidica si estan esperando una 
+respuesta) vayan a cero, las sucursales quedan en loop y los threads se bloquean salvo el de lectura del pipe, esperando a que la variable de transacciones = 1, cuando salen del loop todas las sucursales pueden iniciar nuevamente la accion de transacciones, esto gracias a que todas las sucursales esperan en write y reciben un mensaje para realizar algo, si fueron seleccionadas, en tal caso, la sucursal envia un mensaje a la matriz indicando si termino el trabajo.
+
+Para sincronizar los threads
+
+Cada sucursal tiene un semaforo, el cual permite modificar cuentas a solo un thread, asi solo un thread puede modificar los valores de las cuentas. Tambien hay un thread que solo lee el pipe, y da las indicaciones este thread no necesita bloquearse.
+
+La tarea compila con warnings y esta muy incompleta, esto debido a la falta de tiempo y, tambien, a que renuncie al mi grupo anterior, que por falta de tiempo no fui suficiente aporte, dejando asi que mi falta de tiempo solo me afecte a mi.
+LA libreria de threads, threads.h el compilador gcc no la encuentra, aun asi despues de haber realizado la actualizacion mediante 
+sudo apt-get upgrade gcc
+
